@@ -36,23 +36,27 @@ class CourseList:
 
     def sortByPre(self):
         self._courselist.append(self._courselistScrambled.pop(0))
-        newIndex = 0
         # for each course in the scrambled set
         for course in self._courselistScrambled:
-            # skim through each course in the sorted set
-            for i in range(len(self._courselist)):
+            newIndex = len(self._courselist)
+            # skim through each course backwards in the sorted set
+            for i in range(len(self._courselist), 0, -1):
                 # if the selected course is a preq, insert immediately
                 if( course.amIPre(self._courselistScrambled.at(i)) ):
-                    newIndex = i
-                    break
+                    newIndex = i - 1
                 # else if the selected course has a preq, parse through each till the end
                 elif( course.wasHePre( self.courselistScrambled.at(i) ) ):
-                    newIndex = i + 1
+                    newIndex = i
+                    break
             self._courselist.insert(newIndex, course)
 
 
     def allPreSorted(self, index): #?
-        
+        if len(self._courselist) == 0:
+            raise Exception('Courselist out of range')
+
+        i = 0
+        while( self.courselist = 0
 
 
 
