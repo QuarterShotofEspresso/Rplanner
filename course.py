@@ -19,3 +19,8 @@ class Course:
 
     def wasHePre(crsObj):
         return ( crsObj._id in self._pre )
+
+    # debugging methods
+    def printCourse(self):
+        print('Name: {0}\tID: {1}\tAvail: {2}\tPreq: {3}'.format())
+        return

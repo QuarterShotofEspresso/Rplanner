@@ -51,20 +51,19 @@ class CourseList:
             self._courselist.insert(newIndex, course)
 
 
-    def allPreSorted(self): #?
+    def allPreSorted(self, index): #?
+        
 
-
-
-    #def amIPre(self): #?
-
-
-
-    #def wasHePre(self): #?
 
 
 
     def fileIntoQuarters(self):
+        # parse through courselist
+        for course in self._courselist:
 
+            # for each course, check that the course is valid
+            # 
+            
 
 
 
