@@ -61,8 +61,8 @@ def main():
         return
 
     if ('-g' in sys.argv):
-        genfilepath = sys.argv[sys.argv.find('-g') + 1]
-        coursegen = GenerateCoursePlan(genfilepath)
+        genfilepath = sys.argv[sys.argv.index('-g') + 1]
+        coursegen = GenerateCourseList(genfilepath)
         coursegen.generate()
         return
 
@@ -86,13 +86,13 @@ def main():
         # flag: -ns ### no summer classes (don't include -ns for summer classes)
     maxload = 4
     if( '-l' in sys.argv ):
-        maxload = sys.argv[sys.argv.find('-l') + 1]
+        maxload = sys.argv[sys.argv.index('-l') + 1]
     mycl.sortIntoQuarters(maxload)
     # generate table using pretty table module
     mycl.generateRplanner()
 
     if( '-s' in sys.argv ):
-        saveFilepath = sys.argv[sys.argv.find('-s') + 1]
+        saveFilepath = sys.argv[sys.argv.index('-s') + 1]
         # use flag -s <file_path>
         mycl.saveRplanner(saveFilepath)
     else:

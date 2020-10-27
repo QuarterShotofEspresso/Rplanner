@@ -4,13 +4,13 @@ import json
 
 class GenerateCourseList:
     def __init__(self, filepath):
-        _courselist = []
-        _filepath = filepath
+        self._courselist = []
+        self._filepath = filepath
 
     def makeCourse(self):
         while(True):
             name  = input('Course Name:    ').upper()
-            if( name == 'quit' ):
+            if( name == 'QUIT' ):
                 return {}
             elif( len(name) == 0 ):
                 print('Entry is empty. Restarting THIS course entry')
@@ -49,13 +49,10 @@ class GenerateCourseList:
 
     def generate(self):
         print("""
-
-        Enter course offerings as F/W/s/S corressponding to Fall/Winter/Spring/Summer
-        Enter prereqs by course ID and seperate by ONE SPACE, NOT COMMAS.
-        Empty entries restart course's entry.
-        Type 'quit' on course name to stop writing new courses.
-        
-        
+ Enter course offerings as F/W/s/S corressponding to Fall/Winter/Spring/Summer
+ Enter prereqs by course ID and seperate by ONE SPACE, NOT COMMAS.
+ Empty entries restart course's entry.
+ Type 'quit' on course name to stop writing new courses.
         """)
 
         newcourse = self.makeCourse()
@@ -82,15 +79,15 @@ class GenerateCourseList:
 
 class CourseList:
     def __init__(self, ns):
-        _courselistScrambled = []
-        _courselist  = []    
-        _quarterlist = {Quarters.FALL: [], Quarters.WINTER: [], Quarters.SPRING: [], Quarters.SUMMER: []}
-        _rplan = ''
+        self._courselistScrambled = []
+        self._courselist  = []    
+        self._quarterlist = {Quarters.FALL: [], Quarters.WINTER: [], Quarters.SPRING: [], Quarters.SUMMER: []}
+        self._rplan = ''
         self.Fall = 0
         self.Winter = 0
         self.Spring = 0
         self.Summer = 0
-        excludeSummer = ns
+        self.excludeSummer = ns
 
 
 
