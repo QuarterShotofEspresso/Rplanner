@@ -2,6 +2,57 @@ from course import *
 import json
 
 
+class GenerateCourseList:
+    def __init__(self):
+        _courselist = []
+
+    def makeCourse(self):
+        while(True):
+            name  = input('Course Name:    ').upper()
+            cid   = input('Course id:      ').upper()
+            if( len(cid) == 0 ):
+                print('Entry is empty. Restarting THIS course entry')
+                continue
+
+            avail = input('Offered: [FWsS] ')
+            availarr = []
+            if('F' in avail):
+                availarr.append('FALL')
+            if('W' in avail):
+                availarr.append('WINTER')
+            if('s' in avail):
+                availarr.append('SPRING')
+            if('S' in avail):
+                availarr.append('SUMMER')
+            if( len(availarr) == 0 ):
+                print('Entry is empty. Restarting THIS course entry')
+                continue
+            
+            
+            pre   = input('Prereqs:        ').upper().split(' ')
+            if len(pre) == 0:
+                print('Entry is empty. Restarting THIS course entry')
+                continue
+            
+
+            try:
+                cl    = input('Course Load:    ')
+            if( not isinstance(cl, int) )
+            return {'name': name, 'id': cid, 'avail': availarr, 'pre': pre, 'load': cl}
+
+
+    def generate(self):
+        print("""
+
+        Enter course offerings as F/W/s/S corressponding to Fall/Winter/Spring/Summer
+        Enter prereqs by course ID and seperate by ONE SPACE, NOT COMMAS.
+        Empty entries restart course's entry.
+        Type 'quit' on course name to stop writing new courses.
+        
+        
+        """
+        while
+
 class CourseList:
     def __init__(self, ns):
         _courselistScrambled = []
@@ -34,6 +85,7 @@ class CourseList:
                         element['id'],
                         element['avail'],
                         element['pre']
+                        element['load']
                         )
                 )
        
