@@ -97,7 +97,7 @@ class CourseList:
 
     def populateCourseList(self, filepath):
         # open filepath
-        with fp as open(filepath, 'r'):
+        with open(filepath, 'r') as fp:
             rawdata = json.load(fp)
 
 
@@ -111,7 +111,7 @@ class CourseList:
                 Course( element['name'],
                         element['id'],
                         element['avail'],
-                        element['pre']
+                        element['pre'],
                         element['load']
                         )
                 )
@@ -173,7 +173,7 @@ class CourseList:
         rplanPT = PrettyTable()
         i = 0
 
-        for i range(len(self.Fall._quarterlist)):
+        for i in range(len(self.Fall._quarterlist)):
             rplanPT.add_column(Fall._quarter, Fall._quarterList[i])
             rplanPT.add_column(Winter._quarter, Winter._quarterList[i])
             rplanPT.add_column(Spring._quarter, Spring._quarterList[i])
@@ -192,7 +192,7 @@ class CourseList:
 
 
     def saveRPlanner(self):
-        with fp as open(self._savefile, 'w+'):
+        with open(self._savefile, 'w+') as fp:
             fp.write(self._rplan)
 
         return
