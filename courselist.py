@@ -3,12 +3,19 @@ import json
 
 
 class GenerateCourseList:
-    def __init__(self):
+    def __init__(self, filepath):
         _courselist = []
+        _filepath = filepath
 
     def makeCourse(self):
         while(True):
             name  = input('Course Name:    ').upper()
+            if( name == 'quit' ):
+                return {}
+            elif( len(name) == 0 ):
+                print('Entry is empty. Restarting THIS course entry')
+                continue
+
             cid   = input('Course id:      ').upper()
             if( len(cid) == 0 ):
                 print('Entry is empty. Restarting THIS course entry')
@@ -35,9 +42,8 @@ class GenerateCourseList:
                 continue
             
 
-            try:
-                cl    = input('Course Load:    ')
-            if( not isinstance(cl, int) )
+            cl    = int(input('Course Load:    '))
+            
             return {'name': name, 'id': cid, 'avail': availarr, 'pre': pre, 'load': cl}
 
 
@@ -50,8 +56,29 @@ class GenerateCourseList:
         Type 'quit' on course name to stop writing new courses.
         
         
-        """
-        while
+        """)
+
+        newcourse = self.makeCourse()
+
+        while( bool(newcourse) ):
+            self._courselist.append(newcourse)
+            newcourse = self.makeCourse()
+
+        print('Collected data. Writing to file: {0}'.format(self._filepath))
+        with open(self._filepath, 'w+') as fp:
+            json.dump(self._courselist, fp)
+        
+        
+        return
+
+
+
+
+
+
+
+
+
 
 class CourseList:
     def __init__(self, ns):

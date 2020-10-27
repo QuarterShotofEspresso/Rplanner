@@ -61,33 +61,43 @@ def main():
         return
 
     if ('-g' in sys.argv):
-        generateCoursePlan()
+        genfilepath = sys.argv[sys.argv.find('-g') + 1]
+        coursegen = GenerateCoursePlan(genfilepath)
+        coursegen.generate()
         return
 
 
     # enter the input file
-    if( '-s' in sys.argv ):
-        filepath = sys.argv[sys.argv.find('-s') + 1]
+    coursefilepath = sys.argv[1]
     # read prerequisits and populate into a course list
     # first course must be a seed course: a course with no course-pres
-    mycl = CourseList()
-    mycl.populateCourseList(filepath)
+    mycl = CourseList(('-ns' in sys.argv))
+    mycl.populateCourseList(coursefilepath)
 
+
+    # NOTE: Do I even need this method?
+    # Think about the algo a little more.
+    # This method may be redundant
     mycl.sortByPre()
     
     # sort all courses into respective quarters
     # make sure each class is not going to lose prereq sort
-        # flag: -m <max_classes_per_quarter>
+        # flag: -l <max_classes_per_quarter>
         # flag: -ns ### no summer classes (don't include -ns for summer classes)
     maxload = 4
-    if( maxload
-    mycl.sortIntoQuarters(classesPerQuarter)
+    if( '-l' in sys.argv ):
+        maxload = sys.argv[sys.argv.find('-l') + 1]
+    mycl.sortIntoQuarters(maxload)
     # generate table using pretty table module
     mycl.generateRplanner()
-    # print/save the file
-    mycl.printRplanner()
+
+    if( '-s' in sys.argv ):
+        saveFilepath = sys.argv[sys.argv.find('-s') + 1]
         # use flag -s <file_path>
-    mycl.saveRplanner(saveFilepath)
+        mycl.saveRplanner(saveFilepath)
+    else:
+        # print/save the file
+        mycl.printRplanner()
 
 
 
