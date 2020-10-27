@@ -3,10 +3,18 @@ import json
 
 
 class CourseList:
-    def __init__(self):
+    def __init__(self, ns):
         _courselistScrambled = []
         _courselist  = []    
         _quarterlist = {Quarters.FALL: [], Quarters.WINTER: [], Quarters.SPRING: [], Quarters.SUMMER: []}
+        _rplan = ''
+        self.Fall = 0
+        self.Winter = 0
+        self.Spring = 0
+        self.Summer = 0
+        excludeSummer = ns
+
+
 
 
     def populateCourseList(self, filepath):
@@ -51,30 +59,65 @@ class CourseList:
             self._courselist.insert(newIndex, course)
 
 
-    def allPreSorted(self, index): #?
-        if len(self._courselist) == 0:
-            raise Exception('Courselist out of range')
 
+
+
+    def checkPreqsSorted(self, checkCourse): #?
+        for course in self.courselist:
+            if(course._id in checkCourse._pre):
+                return False
+        return True
+
+
+
+
+    def fileIntoQuarters(self, maxload):
+        # declare quarters
+        self.Fall   = QuarterList(Quarters.FALL)
+        self.Winter = QuarterList(Quarters.WINTER)
+        self.Spring = QuarterList(Quarters.SPRING)
+        self.Summer = QuarterList(Quarters.SUMMER)
+
+        # fill each quarter block
+        while( len(self._courselist) != 0 ):
+            Fall.addCourses(maxload, self._courselist)
+            Winter.addCourses(maxload, self._courselist)
+            Spring.addCourses(maxload, self._courselist)
+            if(excludeSummer):
+                Summer.addCourses(maxload, self._courselist)
+
+        return
+
+
+
+    def generateRPlanner(self):
+        rplanPT = PrettyTable()
         i = 0
-        while( self.courselist = 0
+
+        for i range(len(self.Fall._quarterlist)):
+            rplanPT.add_column(Fall._quarter, Fall._quarterList[i])
+            rplanPT.add_column(Winter._quarter, Winter._quarterList[i])
+            rplanPT.add_column(Spring._quarter, Spring._quarterList[i])
+            rplanPT.add_column(Summer._quarter, Summer._quarterList[i])
+            self._rplan += '\n' + rplanPT.get_string(title='Year {0}'.format(i))
+            rplanPT.clear()
+
+        return 
 
 
 
 
-    def fileIntoQuarters(self):
-        # parse through courselist
-        for course in self._courselist:
-
-            # for each course, check that the course is valid
-            # 
-            
+    def printRPlanner(self):
+        print(self._rplan)
+        return
 
 
+    def saveRPlanner(self):
+        with fp as open(self._savefile, 'w+'):
+            fp.write(self._rplan)
+
+        return
 
 
 
-class QuarterList:
-    def __init__(self, quarter):
-        _quarter = quarter
-        _quarterList = []
 
