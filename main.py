@@ -87,7 +87,7 @@ def main():
     maxload = 4
     if( '-l' in sys.argv ):
         maxload = sys.argv[sys.argv.index('-l') + 1]
-    mycl.sortIntoQuarters(maxload)
+    mycl.fileIntoQuarters(maxload)
     # generate table using pretty table module
     mycl.generateRplanner()
 

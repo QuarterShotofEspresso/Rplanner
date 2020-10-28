@@ -81,7 +81,7 @@ class CourseList:
     def __init__(self, ns):
         self._courselistScrambled = []
         self._courselist  = []    
-        self._quarterlist = {Quarters.FALL: [], Quarters.WINTER: [], Quarters.SPRING: [], Quarters.SUMMER: []}
+        #self._quarterlist = {Quarters.FALL: [], Quarters.WINTER: [], Quarters.SPRING: [], Quarters.SUMMER: []}
         self._rplan = ''
         self.Fall = 0
         self.Winter = 0
@@ -122,14 +122,14 @@ class CourseList:
         self._courselist.append(self._courselistScrambled.pop(0))
         # for each course in the scrambled set
         for course in self._courselistScrambled:
-            newIndex = len(self._courselist)
+            newIndex = len(self._courselist) - 1
             # skim through each course backwards in the sorted set
-            for i in range(len(self._courselist), 0, -1):
+            for i in range(len(self._courselist) - 1, 0, -1):
                 # if the selected course is a preq, insert immediately
-                if( course.amIPre(self._courselistScrambled.at(i)) ):
+                if( course.amIPre(self._courselistScrambled[i]) ):
                     newIndex = i - 1
                 # else if the selected course has a preq, parse through each till the end
-                elif( course.wasHePre( self.courselistScrambled.at(i) ) ):
+                elif( course.wasHePre( self._courselistScrambled[i] ) ):
                     newIndex = i
                     break
             self._courselist.insert(newIndex, course)
@@ -156,11 +156,11 @@ class CourseList:
 
         # fill each quarter block
         while( len(self._courselist) != 0 ):
-            Fall.addCourses(maxload, self._courselist)
-            Winter.addCourses(maxload, self._courselist)
-            Spring.addCourses(maxload, self._courselist)
-            if(excludeSummer):
-                Summer.addCourses(maxload, self._courselist)
+            self.Fall.addCourses(maxload, self._courselist)
+            self.Winter.addCourses(maxload, self._courselist)
+            self.Spring.addCourses(maxload, self._courselist)
+            if(self.excludeSummer):
+                self.Summer.addCourses(maxload, self._courselist)
 
         return
 

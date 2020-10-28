@@ -11,16 +11,16 @@ class Quarters(Enum):
 
 class Course:
     def __init__(self, name, cid, avail, pre, load):
-        _name  = name  # string
-        _id    = cid   # string
-        _avail = avail # list
-        _pre   = pre   # list
-        _load  = load  # number
+        self._name  = name  # string
+        self._id    = cid   # string
+        self._avail = avail # list
+        self._pre   = pre   # list
+        self._load  = load  # number
 
-    def amIPre(crsObj):
+    def amIPre(self, crsObj):
         return ( self._id in crsObj._pre )
 
-    def wasHePre(crsObj):
+    def wasHePre(self, crsObj):
         return ( crsObj._id in self._pre )
 
     # debugging methods
@@ -36,10 +36,9 @@ class Course:
 
 
 class QuarterList:
-    def __init__(self, quarter, courseload):
-        _quarter = quarter
-        _quarterList = []
-        _courseload = courseload
+    def __init__(self, quarter):
+        self._quarter = quarter
+        self._quarterlist = []
 
 
     def roomExists(self, courses, checkCourse):
@@ -52,12 +51,12 @@ class QuarterList:
         # the course must be offered
         # the course must have all preqs sorted
         # there must be room
-    def addCourses( coursesToAdd, courselist ):
+    def addCourses( self, courseload, courselist ):
         newQuarterCourses = []
         for i,course in enumerate(courselist):
             if( course.isOffered(self._quarter) and courselist.checkPreqsSorted(course) and self.roomExists(newQuarterCourses, course) ):
                 newQuarterCourses.append(course)
-                coursesToAdd = coursesToAdd - course._courseload
+                courseload = courseload - course._courseload
                 courselist.pop(i)
 
         self._quarterlist.append(newQuarterCourses)
