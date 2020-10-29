@@ -16,7 +16,8 @@ helpmessage = """
     - availability (Fall, Winter, Spring, or Summer)
     - prerequisites (Provide by id)
     - course load (This is the perceived difficulty. See below for more info)
- With this inputs, Rplanner will generate an n-year course plan.
+ With these inputs, Rplanner will generate a course plan using the least number
+ of years possible.
  The number of years cannot be assigned and is dependent on the courses input.
 
 
@@ -60,11 +61,22 @@ def main():
         print(helpmessage)
         return
 
-    if ('-g' in sys.argv):
-        genfilepath = sys.argv[sys.argv.index('-g') + 1]
+    if ('-gO' in sys.argv):
+        genfilepath = sys.argv[sys.argv.index('-gO') + 1]
         coursegen = GenerateCourseList(genfilepath)
-        coursegen.generate()
+        coursegen.generate('w+')
         return
+    elif ('-gA' in sys.argv):
+        genfilepath = sys.argv[sys.argv.index('-gA') + 1]
+        coursegen = GenerateCourseList(genfilepath)
+        coursegen.generate('a+')
+        return
+    elif ('-gL' in sys.argv):
+        genfilepath = sys.argv[sys.argv.index('-gL') + 1]
+        coursegen = GenerateCourseList(genfilepath)
+        coursegen.list()
+        return
+        
 
 
     # enter the input file

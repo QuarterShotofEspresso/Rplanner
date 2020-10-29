@@ -2,6 +2,18 @@ from course import *
 import json
 
 
+generateMessage = """
+ Enter course offerings as F/W/s/S corressponding to Fall/Winter/Spring/Summer
+ Enter prereqs by course ID and seperate by ONE SPACE, NOT COMMAS.
+ Empty entries restart course's entry.
+ Type 'quit' on course name to stop writing new courses.
+"""
+
+
+
+
+
+
 class GenerateCourseList:
     def __init__(self, filepath):
         self._courselist = []
@@ -47,13 +59,10 @@ class GenerateCourseList:
             return {'name': name, 'id': cid, 'avail': availarr, 'pre': pre, 'load': cl}
 
 
-    def generate(self):
-        print("""
- Enter course offerings as F/W/s/S corressponding to Fall/Winter/Spring/Summer
- Enter prereqs by course ID and seperate by ONE SPACE, NOT COMMAS.
- Empty entries restart course's entry.
- Type 'quit' on course name to stop writing new courses.
-        """)
+    @classmethod
+    def generate(self, editMode):
+
+        print(generateMessage)
 
         newcourse = self.makeCourse()
 
@@ -62,14 +71,22 @@ class GenerateCourseList:
             newcourse = self.makeCourse()
 
         print('Collected data. Writing to file: {0}'.format(self._filepath))
-        with open(self._filepath, 'w+') as fp:
+        with open(self._filepath, editMode) as fp:
             json.dump(self._courselist, fp)
         
         
         return
 
 
+    @classmethod
+    def list(self):
+        with open(self._filepath, 'r') as fp:
+            json.load(self._courselist, fp)
 
+        for key, value in self._courselist.items():
+            print(key, value)
+
+        return
 
 
 

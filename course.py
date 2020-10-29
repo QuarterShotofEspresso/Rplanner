@@ -17,16 +17,15 @@ class Course:
         self._pre   = pre   # list
         self._load  = load  # number
 
+
+    def __repr__(self):
+        return 'Name: {0}\tID: {1}\tAvail: {2}\tPreq: {3}'.format(self._name, self._id, self._avail, self._pre, self._load)
+
     def amIPre(self, crsObj):
         return ( self._id in crsObj._pre )
 
     def wasHePre(self, crsObj):
         return ( crsObj._id in self._pre )
-
-    # debugging methods
-    def printCourse(self):
-        print('Name: {0}\tID: {1}\tAvail: {2}\tPreq: {3}'.format())
-        return
 
     def isOffered(self, quarter):
         return (quarter in self._avail)
