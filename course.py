@@ -1,4 +1,5 @@
 from enum import Enum
+import pdb
 
 class Quarters(Enum):
     FALL   = 'FALL'
@@ -19,16 +20,16 @@ class Course:
 
 
     def __repr__(self):
-        return 'Name: {0}\tID: {1}\tAvail: {2}\tPreq: {3}'.format(self._name, self._id, self._avail, self._pre, self._load)
+        return 'Name: {0}\nID: {1}\nAvail: {2}\nPreq: {3}\nLoad: {4}'.format(self._name, self._id, self._avail, self._pre, self._load)
 
     def amIPre(self, crsObj):
         return ( self._id in crsObj._pre )
 
-    def wasHePre(self, crsObj):
+    def wasThatPre(self, crsObj):
         return ( crsObj._id in self._pre )
 
     def isOffered(self, quarter):
-        return (quarter in self._avail)
+        return (quarter.name in self._avail)
 
 
 

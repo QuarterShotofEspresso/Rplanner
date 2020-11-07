@@ -59,7 +59,6 @@ class GenerateCourseList:
             return {'name': name, 'id': cid, 'avail': availarr, 'pre': pre, 'load': cl}
 
 
-    @classmethod
     def generate(self, editMode):
 
         print(generateMessage)
@@ -78,7 +77,6 @@ class GenerateCourseList:
         return
 
 
-    @classmethod
     def list(self):
         with open(self._filepath, 'r') as fp:
             json.load(self._courselist, fp)
@@ -139,17 +137,26 @@ class CourseList:
         self._courselist.append(self._courselistScrambled.pop(0))
         # for each course in the scrambled set
         for course in self._courselistScrambled:
-            newIndex = len(self._courselist) - 1
+            #pdb.set_trace() #dbg
+            newIndex = len(self._courselist)
             # skim through each course backwards in the sorted set
-            for i in range(len(self._courselist) - 1, 0, -1):
+            for i in range(len(self._courselist) - 1, -1, -1):
                 # if the selected course is a preq, insert immediately
-                if( course.amIPre(self._courselistScrambled[i]) ):
-                    newIndex = i - 1
-                # else if the selected course has a preq, parse through each till the end
-                elif( course.wasHePre( self._courselistScrambled[i] ) ):
+                if( course.amIPre(self._courselist[i]) ):
                     newIndex = i
+                # else if the selected course has a preq, parse through each till the end
+                elif( course.wasThatPre( self._courselist[i] ) ):
+                    newIndex = i + 1
                     break
             self._courselist.insert(newIndex, course)
+
+        # dbg------------------------------------
+        print('Updated Course List:')
+        for course in self._courselist:
+            print(course)
+            print('\n')
+
+        pdb.set_trace()
 
 
 
@@ -173,6 +180,7 @@ class CourseList:
 
         # fill each quarter block
         while( len(self._courselist) != 0 ):
+            pdb.set_trace() #dbg
             self.Fall.addCourses(maxload, self._courselist)
             self.Winter.addCourses(maxload, self._courselist)
             self.Spring.addCourses(maxload, self._courselist)

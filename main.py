@@ -2,6 +2,7 @@
 from courselist import *
 import sys
 
+
 # use case:
 helpmessage = """
 
@@ -57,6 +58,11 @@ helpmessage = """
 
 def main():
 
+
+    if (len(sys.argv) < 2):
+        print('Incorrect useage. Type \'./<exec> -h\' for help.')
+        return
+
     if ('-h' in sys.argv):
         print(helpmessage)
         return
@@ -90,6 +96,7 @@ def main():
     # NOTE: Do I even need this method?
     # Think about the algo a little more.
     # This method may be redundant
+    #pdb.set_trace() #dbg
     mycl.sortByPre()
     
     # sort all courses into respective quarters
@@ -99,6 +106,9 @@ def main():
     maxload = 4
     if( '-l' in sys.argv ):
         maxload = sys.argv[sys.argv.index('-l') + 1]
+
+    pdb.set_trace() #dbg
+
     mycl.fileIntoQuarters(maxload)
     # generate table using pretty table module
     mycl.generateRplanner()
