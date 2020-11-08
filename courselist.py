@@ -115,6 +115,9 @@ class CourseList:
 
 
 
+    def __str__(self):
+        return self._rplan
+
 
     def populateCourseList(self, filepath):
         # open filepath
@@ -174,7 +177,7 @@ class CourseList:
 
     def checkPreqsSorted(self, checkCourse): #?
         for course in self._courselist:
-            if(checkCourse._id != course._id and course._id in checkCourse._pre):
+            if((checkCourse._id != course._id) and (course._id in checkCourse._pre)):
                 return False
         return True
 
@@ -225,13 +228,6 @@ class CourseList:
             rplanPT.clear()
         
         return 
-
-
-
-
-    def printRPlanner(self):
-        print(self._rplan)
-        return
 
 
     def saveRPlanner(self):

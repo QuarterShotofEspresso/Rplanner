@@ -119,7 +119,7 @@ def main():
         mycl.saveRPlanner(saveFilepath)
     else:
         # print/save the file
-        mycl.printRPlanner()
+        print(mycl)
 
 
 
