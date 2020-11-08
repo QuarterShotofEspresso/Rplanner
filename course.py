@@ -57,11 +57,14 @@ class QuarterList:
         # there must be room
     def addCourses( self, courselistObj ):
         newQuarterCourses = []
-        for i,course in enumerate(courselistObj._courselist):
+        duplicateCourselist = list(courselistObj._courselist)
+        for course in duplicateCourselist:
+            #print(course, ' ', self._quarter) #dbg
+            #pdb.set_trace() #dbg
             if( course.isOffered(self._quarter) and courselistObj.checkPreqsSorted(course) and self.roomExists(newQuarterCourses, course) ):
                 newQuarterCourses.append(course)
                 self.courseload = self.courseload - course._load
-                courselistObj._courselist.pop(i)
+                courselistObj._courselist.remove(course)
 
         self._quarterlist.append(newQuarterCourses)
 

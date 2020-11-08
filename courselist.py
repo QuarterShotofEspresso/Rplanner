@@ -106,7 +106,6 @@ class CourseList:
     def __init__(self, ns):
         self._courselistScrambled = []
         self._courselist  = []    
-        #self._quarterlist = {Quarters.FALL: [], Quarters.WINTER: [], Quarters.SPRING: [], Quarters.SUMMER: []}
         self._rplan = ''
         self.Fall = 0
         self.Winter = 0
@@ -160,12 +159,12 @@ class CourseList:
                     break
             self._courselist.insert(newIndex, course)
 
-        if False:
-            # dbg------------------------------------
-            print('Updated Course List:')
-            for course in self._courselist:
-                print(repr(course))
-                print('\n')
+        #if False:
+        #    # dbg------------------------------------
+        #    print('Updated Course List:')
+        #    for course in self._courselist:
+        #        print(repr(course))
+        #        print('\n')
 
         #pdb.set_trace()
 
@@ -202,7 +201,7 @@ class CourseList:
 
 
     def levelPlan(self, *courselists):
-        pdb.set_trace()
+        #pdb.set_trace()
         most_courses = len(max(courselists, key=lambda p: len(p)))
         for courselist in courselists:
             while( len(courselist) != most_courses ):
@@ -212,7 +211,6 @@ class CourseList:
     def generateRPlanner(self):
         rplanPT = PrettyTable()
         i = 0
-
 
         for i in range(len(self.Fall._quarterlist)):
             self.levelPlan(self.Fall._quarterlist[i],
