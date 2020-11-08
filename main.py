@@ -6,7 +6,7 @@ import sys
 # use case:
 helpmessage = """
 
- Rplanner is a simple python script that designs a course plan for Rside students.
+ Rplanner is a course planning utility catered for Rside students.
  This could likely be used for other schools, it depends on course structure and
  hierarchy.
  Provide a json file containing details of each course.

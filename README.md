@@ -1,38 +1,38 @@
 # RPlanner
 > Author: Ratnodeep Bandyopadhyay ([@QuarterShotofEspresso]())
 
- Rplanner is a simple python script that designs a course plan for Rside students.
+ Rplanner is course planning utility catered for Rside students.
  This could likely be used for other schools, it depends on course structure and
  hierarchy.
  Provide a json file containing details of each course.
  This json file can be created using the -g flag. See below.
- Each course requires:
-    - name (Ex: Biomedical Ethics, Discrete Structures, Linear Algebra I)
-    - id (Ex: PHIL009, cs111, or Math131)
-    - availability (Fall, Winter, Spring, or Summer)
-    - prerequisites (Provide by id)
-    - course load (This is the perceived difficulty. See below for more info)
+ Each course requires:  
+    - name (Ex: Biomedical Ethics, Discrete Structures, Linear Algebra I)  
+    - id (Ex: PHIL009, cs111, or Math131)  
+    - availability (Fall, Winter, Spring, or Summer)  
+    - prerequisites (Provide by id)  
+    - course load (This is the perceived difficulty. See below for more info)  
  With these inputs, Rplanner will generate a course plan using the least number
  of years possible.
  The number of years cannot be assigned and is dependent on the courses input.
 
 
- Use Cases:
-    ./main.py <file> [-ns] [-s <file>] [-l <load>]
+ Use Cases:  
+`    ./main.py <file> [-ns] [-s <file>] [-l <load>]
     ./main.py -h
-    ./main.py -g <file>
+    ./main.py -g <file>`
 
 
  Flags:
-    -g <file>   Launch course list generator.
+`    -g <file>   Launch course list generator.
     -h          Prints this message. Every other flag is ignored.
     -ns         No summer courses. (Default keeps summer courses)
     -s <file>   Print path to file. (Default prints to console)
-    -l <load>   Maximum course load per quarter. (Defaults to 4)
+    -l <load>   Maximum course load per quarter. (Defaults to 4)`
 
  Example:
-    ./main.py courses.json -ns -l 3 -s myschedule
-    ./main.py courses.json -ns
+`    ./main.py courses.json -ns -l 3 -s myschedule
+    ./main.py courses.json -ns`
 
 
  Course load:   Course load is the perceived difficulty of a class.
