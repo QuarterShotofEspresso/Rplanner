@@ -107,19 +107,19 @@ def main():
     if( '-l' in sys.argv ):
         maxload = sys.argv[sys.argv.index('-l') + 1]
 
-    pdb.set_trace() #dbg
+    #pdb.set_trace() #dbg
 
     mycl.fileIntoQuarters(maxload)
     # generate table using pretty table module
-    mycl.generateRplanner()
+    mycl.generateRPlanner()
 
     if( '-s' in sys.argv ):
         saveFilepath = sys.argv[sys.argv.index('-s') + 1]
         # use flag -s <file_path>
-        mycl.saveRplanner(saveFilepath)
+        mycl.saveRPlanner(saveFilepath)
     else:
         # print/save the file
-        mycl.printRplanner()
+        mycl.printRPlanner()
 
 
 

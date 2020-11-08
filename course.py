@@ -19,6 +19,9 @@ class Course:
         self._load  = load  # number
 
 
+    def __str__(self):
+        return self._id
+
     def __repr__(self):
         return 'Name: {0}\nID: {1}\nAvail: {2}\nPreq: {3}\nLoad: {4}'.format(self._name, self._id, self._avail, self._pre, self._load)
 
@@ -29,20 +32,21 @@ class Course:
         return ( crsObj._id in self._pre )
 
     def isOffered(self, quarter):
-        return (quarter.name in self._avail)
+        return (quarter in self._avail)
 
 
 
 
 
 class QuarterList:
-    def __init__(self, quarter):
+    def __init__(self, quarter, courseload):
         self._quarter = quarter
         self._quarterlist = []
+        self.courseload = courseload
 
 
     def roomExists(self, courses, checkCourse):
-        currentload = self._courseload
+        currentload = self.courseload
         for course in courses: currentload = currentload - course._load
         return ((currentload - checkCourse._load) >= 0)
 
@@ -51,13 +55,13 @@ class QuarterList:
         # the course must be offered
         # the course must have all preqs sorted
         # there must be room
-    def addCourses( self, courseload, courselist ):
+    def addCourses( self, courselistObj ):
         newQuarterCourses = []
-        for i,course in enumerate(courselist):
-            if( course.isOffered(self._quarter) and courselist.checkPreqsSorted(course) and self.roomExists(newQuarterCourses, course) ):
+        for i,course in enumerate(courselistObj._courselist):
+            if( course.isOffered(self._quarter) and courselistObj.checkPreqsSorted(course) and self.roomExists(newQuarterCourses, course) ):
                 newQuarterCourses.append(course)
-                courseload = courseload - course._courseload
-                courselist.pop(i)
+                self.courseload = self.courseload - course._load
+                courselistObj._courselist.pop(i)
 
         self._quarterlist.append(newQuarterCourses)
 

@@ -1,6 +1,6 @@
 from course import *
 import json
-
+from prettytable import PrettyTable
 
 generateMessage = """
  Enter course offerings as F/W/s/S corressponding to Fall/Winter/Spring/Summer
@@ -55,8 +55,18 @@ class GenerateCourseList:
             
 
             cl    = int(input('Course Load:    '))
+
+            courseDescription = {'name': name, 'id': cid, 'avail': availarr, 'pre': pre, 'load': cl}
+
+
+            print('Course Description:\n{0}'.format(courseDescription))
+            if( input('CourseValid? [Y/n]').lower() == 'n' ):
+                print('Restarting THIS course entry')
+                continue
             
-            return {'name': name, 'id': cid, 'avail': availarr, 'pre': pre, 'load': cl}
+            return courseDescription
+
+
 
 
     def generate(self, editMode):
@@ -150,21 +160,22 @@ class CourseList:
                     break
             self._courselist.insert(newIndex, course)
 
-        # dbg------------------------------------
-        print('Updated Course List:')
-        for course in self._courselist:
-            print(course)
-            print('\n')
+        if False:
+            # dbg------------------------------------
+            print('Updated Course List:')
+            for course in self._courselist:
+                print(repr(course))
+                print('\n')
 
-        pdb.set_trace()
+        #pdb.set_trace()
 
 
 
 
 
     def checkPreqsSorted(self, checkCourse): #?
-        for course in self.courselist:
-            if(course._id in checkCourse._pre):
+        for course in self._courselist:
+            if(checkCourse._id != course._id and course._id in checkCourse._pre):
                 return False
         return True
 
@@ -173,36 +184,48 @@ class CourseList:
 
     def fileIntoQuarters(self, maxload):
         # declare quarters
-        self.Fall   = QuarterList(Quarters.FALL)
-        self.Winter = QuarterList(Quarters.WINTER)
-        self.Spring = QuarterList(Quarters.SPRING)
-        self.Summer = QuarterList(Quarters.SUMMER)
+        self.Fall   = QuarterList(Quarters.FALL.name, maxload)
+        self.Winter = QuarterList(Quarters.WINTER.name, maxload)
+        self.Spring = QuarterList(Quarters.SPRING.name, maxload)
+        self.Summer = QuarterList(Quarters.SUMMER.name, maxload)
 
         # fill each quarter block
         while( len(self._courselist) != 0 ):
-            pdb.set_trace() #dbg
-            self.Fall.addCourses(maxload, self._courselist)
-            self.Winter.addCourses(maxload, self._courselist)
-            self.Spring.addCourses(maxload, self._courselist)
+            #pdb.set_trace() #dbg
+            self.Fall.addCourses(self)
+            self.Winter.addCourses(self)
+            self.Spring.addCourses(self)
             if(self.excludeSummer):
-                self.Summer.addCourses(maxload, self._courselist)
+                self.Summer.addCourses(self)
 
         return
 
+
+    def levelPlan(self, *courselists):
+        pdb.set_trace()
+        most_courses = len(max(courselists, key=lambda p: len(p)))
+        for courselist in courselists:
+            while( len(courselist) != most_courses ):
+                courselist.append('')
 
 
     def generateRPlanner(self):
         rplanPT = PrettyTable()
         i = 0
 
+
         for i in range(len(self.Fall._quarterlist)):
-            rplanPT.add_column(Fall._quarter, Fall._quarterList[i])
-            rplanPT.add_column(Winter._quarter, Winter._quarterList[i])
-            rplanPT.add_column(Spring._quarter, Spring._quarterList[i])
-            rplanPT.add_column(Summer._quarter, Summer._quarterList[i])
+            self.levelPlan(self.Fall._quarterlist[i],
+                           self.Winter._quarterlist[i],
+                           self.Spring._quarterlist[i],
+                           self.Summer._quarterlist[i])
+            rplanPT.add_column(self.Fall._quarter, self.Fall._quarterlist[i])
+            rplanPT.add_column(self.Winter._quarter, self.Winter._quarterlist[i])
+            rplanPT.add_column(self.Spring._quarter, self.Spring._quarterlist[i])
+            rplanPT.add_column(self.Summer._quarter, self.Summer._quarterlist[i])
             self._rplan += '\n' + rplanPT.get_string(title='Year {0}'.format(i))
             rplanPT.clear()
-
+        
         return 
 
 
