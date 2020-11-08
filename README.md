@@ -18,19 +18,19 @@
 
 
  Use Cases:  
-`    ./main.py <file> [-ns] [-s <file>] [-l <load>]
-    ./main.py -h
-    ./main.py -g <file>`
+`    ./main.py <file> [-ns] [-s <file>] [-l <load>]  
+    ./main.py -h  
+    ./main.py -g <file>`  
 
 
- Flags:
-`    -g <file>   Launch course list generator.
-    -h          Prints this message. Every other flag is ignored.
-    -ns         No summer courses. (Default keeps summer courses)
-    -s <file>   Print path to file. (Default prints to console)
-    -l <load>   Maximum course load per quarter. (Defaults to 4)`
+ Flags:  
+`    -g <file>   Launch course list generator.  
+    -h          Prints this message. Every other flag is ignored.  
+    -ns         No summer courses. (Default keeps summer courses)  
+    -s <file>   Print path to file. (Default prints to console)  
+    -l <load>   Maximum course load per quarter. (Defaults to 4)`  
 
- Example:
+ Example:  
 `    ./main.py courses.json -ns -l 3 -s myschedule
     ./main.py courses.json -ns`
 
@@ -48,5 +48,3 @@
                             This is just an example.
 
 
-
-"""
