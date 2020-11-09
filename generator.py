@@ -7,12 +7,20 @@ helpmessage_gen = """
  Empty entries restart course's entry.
  Type 'quit' on gen> to stop writing new courses.
 
- rm <CID>           to remove course by ID
- seed <CID>         to move a previously entered course to the front
- help               to print this message
- none               to forego a course name as this is optional
- quit               to quit courselist generator
- <*>                anything else is interpreted as a course name
+ Commands:
+     rm <CID>           to remove course by ID
+     seed <CID>         to move a previously entered course to the front
+     help               to print this message
+     none               to forego a course name as this is optional
+     quit               to quit courselist generator
+     list               list all classes by ID
+     <*>                anything else is interpreted as a course name
+
+ Example:
+     rm CS111
+     seed PHIL009
+     CS010 
+
 """
 
 
@@ -40,6 +48,7 @@ class GenerateCourseList:
         helpPat = re.compile(r'^HELP')
         nonePat = re.compile(r'^NONE')
         quitPat = re.compile(r'^QUIT')
+        lsPat   = re.compile(r'^LIST')
         seedcourse = False
 
         while(True):
@@ -59,12 +68,16 @@ class GenerateCourseList:
             elif( helpPat.match(cid) ):
                 print(helpmessage_gen)
                 continue
+            elif( lsPat.match(cid) ):
+                for course in self._courselist:
+                    print(course)
+                continue
             elif( len(cid) == 0 ):
                 continue
 
     
             # Course name
-            name  = input('Course ID  :    ').upper()
+            name  = input('Course Name:    ').upper()
             if( len(name) == 0 ):
                 print('Entry is empty. Restarting THIS course entry')
                 continue
@@ -121,10 +134,9 @@ class GenerateCourseList:
 
         if( keepExisting ):
             with open(self._filepath, 'r') as fp:
-                json.load(self._courselist, fp)
+                self._courselist = json.load(fp)
 
         newcourse = self.makeCourse()
-        print(newcourse)
 
         while( bool(newcourse[0]) ):
             if( newcourse[1] ): #if course is seed course
