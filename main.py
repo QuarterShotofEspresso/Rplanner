@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from courselist import *
+from generator import *
 import sys
 
 
@@ -29,7 +30,8 @@ helpmessage = """
 
 
  Flags:
-    -g <file>   Launch course list generator.
+    -gO <file>  Overwrite existing json.
+    -g  <file>  Modify existing json.
     -h          Prints this message. Every other flag is ignored.
     -ns         No summer courses. (Default keeps summer courses)
     -s <file>   Print path to file. (Default prints to console)
@@ -70,19 +72,15 @@ def main():
     if ('-gO' in sys.argv):
         genfilepath = sys.argv[sys.argv.index('-gO') + 1]
         coursegen = GenerateCourseList(genfilepath)
-        coursegen.generate('w+')
+        coursegen.generate(False)
         return
-    elif ('-gA' in sys.argv):
-        genfilepath = sys.argv[sys.argv.index('-gA') + 1]
+
+    elif ('-g' in sys.argv):
+        genfilepath = sys.argv[sys.argv.index('-g') + 1]
         coursegen = GenerateCourseList(genfilepath)
-        coursegen.generate('a+')
+        coursegen.generate()
         return
-    elif ('-gL' in sys.argv):
-        genfilepath = sys.argv[sys.argv.index('-gL') + 1]
-        coursegen = GenerateCourseList(genfilepath)
-        coursegen.list()
-        return
-        
+    
 
 
     # enter the input file
@@ -118,7 +116,7 @@ def main():
         # use flag -s <file_path>
         mycl.saveRPlanner(saveFilepath)
     else:
-        # print/save the file
+        # print plan
         print(mycl)
 
 
