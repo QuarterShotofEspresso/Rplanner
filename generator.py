@@ -115,14 +115,13 @@ class GenerateCourseList:
 
 
             # Course Load
-            cl     = input('Course Load [1]:    ')
-            if( len(cl) == 0 ):
-                print('Entry is empty. Restarting THIS course entry.')
+            clstr  = input('Course Load [1]:    ')
+            if( len(clstr) == 0 ):
+                cl = 1
             else:
-                cl = int(cl)
+                cl = int(clstr)
 
             courseDescription = {'name': name, 'id': cid, 'avail': availarr, 'pre': pre, 'load': cl}
-
 
             print('Course Description:\n{0}'.format(courseDescription))
             if( input('Course description valid? [n] ').lower() == 'n' ):
