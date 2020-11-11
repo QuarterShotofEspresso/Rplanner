@@ -62,8 +62,8 @@
                 It enables the description of abstract details
                 such as the perceived difficulty of a course and 
                 concrete details like co-requisites all in one go.
-                Remember that course load is NOT the units per class.
-
+                Remember that course load is NOT the units per class.  
+  
                 If there is a difficult course, for example: CS111,
                 whose difficulty could demand the time and effort of two
                 courses, then the course load for CS111 would be 2.
