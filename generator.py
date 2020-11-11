@@ -12,7 +12,6 @@ helpmessage_gen = """
      rm <CID>           to remove course by ID
      seed <CID>         to move a previously entered course to the front
      help               to print this message
-     none               to forego a course name as this is optional
      quit               to quit courselist generator
      list               list all classes by ID
      <*>                anything else is interpreted as a course name
@@ -48,7 +47,7 @@ class GenerateCourseList:
         rmPat   = re.compile(r'^RM (.+)')
         seedPat = re.compile(r'^SEED (.+)')
         helpPat = re.compile(r'^HELP')
-        nonePat = re.compile(r'^NONE')
+        #nonePat = re.compile(r'^NONE')
         quitPat = re.compile(r'^QUIT')
         lsPat   = re.compile(r'^LIST')
         seedcourse = False
@@ -56,7 +55,7 @@ class GenerateCourseList:
         while(True):
 
             # Course ID
-            cid   = input('gen>            ').upper()
+            cid    = input('gen>                ').upper()
             if( quitPat.match(cid) ):
                 return {}, False
             elif( rmPat.match(cid) ): # remove cid
@@ -80,16 +79,16 @@ class GenerateCourseList:
 
     
             # Course name
-            name  = input('Course Name:    ').upper()
-            if( len(name) == 0 ):
-                print('Entry is empty. Restarting THIS course entry')
-                continue
-            elif( nonePat.match(name) ):
-                name = ''
+            name   = input('Course Name [none]: ').upper()
+            #if( len(name) == 0 ):
+            #    print('Entry is empty. Restarting THIS course entry')
+            #    continue
+            #elif( nonePat.match(name) ):
+            #    name = ''
 
 
             # Availability
-            avail = input('Offered [FWsS]: ')
+            avail  = input('Offered [FWsS]:     ')
             availarr = []
             allQuarters = False
             if( len(avail) == 0 ):
@@ -103,21 +102,22 @@ class GenerateCourseList:
             if('S' in avail or allQuarters):
                 availarr.append('SUMMER')
             if( len(availarr) == 0 ):
-                print('Input not understood. Restarting THIS course entry')
+                print('Symbol(s) not understood. Restarting THIS course entry')
                 continue
             
 
             # Prereqs
-            pre   = input('Prereqs [seed]: ').upper().split(' ')
-            if( len(pre) == 0 ):
+            prestr = input('Prereqs [seed]:     ')
+            pre    = prestr.upper().split(' ')
+            if( len(prestr) == 0 ):
                 seedcourse = True
                 print('Logged as seed course.')
 
 
             # Course Load
-            cl    = input('Course Load:    ')
+            cl     = input('Course Load [1]:    ')
             if( len(cl) == 0 ):
-                print('Entry is empty. Restarting THIS course entry')
+                print('Entry is empty. Restarting THIS course entry.')
             else:
                 cl = int(cl)
 
@@ -147,7 +147,7 @@ class GenerateCourseList:
 
         while( bool(newcourse[0]) ):
             if( newcourse[1] ): #if course is seed course
-                self._courselist.insert(newcourse[0], 0)
+                self._courselist.insert(0, newcourse[0])
             else:
                 self._courselist.append(newcourse[0])
             newcourse = self.makeCourse()
