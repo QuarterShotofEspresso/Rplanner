@@ -1,3 +1,8 @@
+#
+# Property of Ratnodeep Bandyopadhyay
+# All rights reserved. Nov 2020.
+#
+
 from course import *
 import json
 from prettytable import PrettyTable

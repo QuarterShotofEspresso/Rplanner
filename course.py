@@ -1,3 +1,8 @@
+#
+# Property of Ratnodeep Bandyopadhyay
+# All rights reserved. Nov 2020.
+#
+
 from enum import Enum
 import pdb
 
