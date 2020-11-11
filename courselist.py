@@ -140,8 +140,8 @@ class CourseList:
         return 
 
 
-    def saveRPlanner(self):
-        with open(self._savefile, 'w+') as fp:
+    def saveRPlanner(self, savefile):
+        with open(savefile, 'w+') as fp:
             fp.write(self._rplan)
 
         return
