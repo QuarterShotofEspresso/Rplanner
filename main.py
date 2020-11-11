@@ -62,7 +62,7 @@ def main():
 
 
     if (len(sys.argv) < 2):
-        print('Incorrect useage. Type \'./<exec> -h\' for help.')
+        print('Incorrect usage. Type \'./<exec> -h\' for help.')
         return
 
     if ('-h' in sys.argv):
