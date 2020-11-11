@@ -2,6 +2,7 @@ import json
 import re
 
 helpmessage_gen = """
+
  Enter course offerings as F/W/s/S corressponding to Fall/Winter/Spring/Summer
  Enter prereqs by course ID and seperate by ONE SPACE, NOT COMMAS.
  Empty entries restart course's entry.
@@ -17,9 +18,10 @@ helpmessage_gen = """
      <*>                anything else is interpreted as a course name
 
  Example:
-     rm CS111
-     seed PHIL009
-     CS010 
+     rm CS111           will search for an existing CID by \'CS111\' and remove it
+     seed PHIL009       moves the course \'PHIL009\' to the front of the list
+     CS010              starts the creation of a new course entry with CID: \'CS010\'
+     ramitbabe          starts the creation of a new course entry with CID: \'ramitbabe\'
 
 """
 
@@ -30,7 +32,7 @@ class GenerateCourseList:
         self._filepath = filepath
 
 
-    def removeCourseDescription(self):
+    def removeCourseDescription(self, rmtoken):
         for course in self._courselist:
             if( course.id == rmtoken ):
                 self._courselist.remove(course)
@@ -63,6 +65,7 @@ class GenerateCourseList:
                 continue
             elif( seedPat.match(cid) ):
                 seedtoken = seedPat.search(cid)
+                print('Implement Me!!')
                 #self.seedCourseDescription(seedtoken) #TODO: if issue becomes common
                 continue
             elif( helpPat.match(cid) ):
@@ -86,24 +89,27 @@ class GenerateCourseList:
 
 
             # Availability
-            avail = input('Offered: [FWsS] ')
+            avail = input('Offered [FWsS]: ')
             availarr = []
-            if('F' in avail):
+            allQuarters = False
+            if( len(avail) == 0 ):
+                allQuarters = True
+            if('F' in avail or allQuarters):
                 availarr.append('FALL')
-            if('W' in avail):
+            if('W' in avail or allQuarters):
                 availarr.append('WINTER')
-            if('s' in avail):
+            if('s' in avail or allQuarters):
                 availarr.append('SPRING')
-            if('S' in avail):
+            if('S' in avail or allQuarters):
                 availarr.append('SUMMER')
             if( len(availarr) == 0 ):
-                print('Entry is empty. Restarting THIS course entry')
+                print('Input not understood. Restarting THIS course entry')
                 continue
             
 
             # Prereqs
             pre   = input('Prereqs [seed]: ').upper().split(' ')
-            if len(pre) == 0:
+            if( len(pre) == 0 ):
                 seedcourse = True
                 print('Logged as seed course.')
 
@@ -119,8 +125,8 @@ class GenerateCourseList:
 
 
             print('Course Description:\n{0}'.format(courseDescription))
-            if( input('Course description valid? [Y/n]').lower() == 'n' ):
-                print('Restarting THIS course entry')
+            if( input('Course description valid? [n] ').lower() == 'n' ):
+                print('Restarting THIS course entry.')
                 continue
             
             return courseDescription, seedcourse
@@ -132,6 +138,7 @@ class GenerateCourseList:
 
         print(helpmessage_gen)
 
+        #keep the existing courses in the provided json
         if( keepExisting ):
             with open(self._filepath, 'r') as fp:
                 self._courselist = json.load(fp)
