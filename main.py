@@ -1,9 +1,9 @@
+#!/usr/bin/python3
 #
 # Property of Ratnodeep Bandyopadhyay
 # All rights reserved. Nov 2020.
 #
 
-#!/usr/bin/python3
 from courselist import *
 from generator import *
 import sys
