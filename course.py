@@ -39,14 +39,13 @@ class Course:
 
 
 class QuarterList:
-    def __init__(self, quarter, courseload):
+    def __init__(self, quarter):
         self._quarter = quarter
         self._quarterlist = []
-        self.courseload = courseload
 
 
-    def roomExists(self, courses, checkCourse):
-        return ((self.courseload - checkCourse._load) >= 0)
+    def roomExists(self, courses, checkCourse, maxload):
+        return ((maxload - checkCourse._load) >= 0)
 
 
     def preNotInQuarter(self, checkCourse, coursesInQuarter):
@@ -61,15 +60,15 @@ class QuarterList:
         # the course must be offered
         # the course must have all preqs sorted
         # there must be room
-    def addCourses( self, courselistObj ):
+    def addCourses( self, courselistObj, maxload ):
         newQuarterCourses = []
         duplicateCourselist = list(courselistObj._courselist)
         for course in duplicateCourselist:
             #print(course, ' ', self._quarter) #dbg
             #pdb.set_trace() #dbg
-            if( course.isOffered(self._quarter) and courselistObj.checkPreqsSorted(course) and self.roomExists(newQuarterCourses, course) and self.preNotInQuarter(course, newQuarterCourses) ):
+            if( course.isOffered(self._quarter) and courselistObj.checkPreqsSorted(course) and self.roomExists(newQuarterCourses, course, maxload) and self.preNotInQuarter(course, newQuarterCourses) ):
                 newQuarterCourses.append(course)
-                self.courseload = self.courseload - course._load
+                maxload = maxload - course._load
                 courselistObj._courselist.remove(course)
 
         self._quarterlist.append(newQuarterCourses)

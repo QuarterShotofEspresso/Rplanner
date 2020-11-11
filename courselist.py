@@ -63,16 +63,6 @@ class CourseList:
                     break
             self._courselist.insert(newIndex, course)
 
-        #if False:
-        #    # dbg------------------------------------
-        #    print('Updated Course List:')
-        #    for course in self._courselist:
-        #        print(repr(course))
-        #        print('\n')
-
-        #pdb.set_trace()
-
-
 
 
 
@@ -87,28 +77,35 @@ class CourseList:
 
     def fileIntoQuarters(self, maxload):
         # declare quarters
-        self.Fall   = QuarterList(Quarters.FALL.name, maxload)
-        self.Winter = QuarterList(Quarters.WINTER.name, maxload)
-        self.Spring = QuarterList(Quarters.SPRING.name, maxload)
-        self.Summer = QuarterList(Quarters.SUMMER.name, maxload)
+        self.Fall   = QuarterList(Quarters.FALL.name)
+        self.Winter = QuarterList(Quarters.WINTER.name)
+        self.Spring = QuarterList(Quarters.SPRING.name)
+        self.Summer = QuarterList(Quarters.SUMMER.name)
 
         # fill each quarter block
         while( len(self._courselist) != 0 ):
             #pdb.set_trace() #dbg
-            self.Fall.addCourses(self)
-            self.Winter.addCourses(self)
-            self.Spring.addCourses(self)
-            if(self.excludeSummer):
-                self.Summer.addCourses(self)
+            self.Fall.addCourses(self, maxload)
+            self.Winter.addCourses(self, maxload)
+            self.Spring.addCourses(self, maxload)
+            if(not self.excludeSummer):
+                self.Summer.addCourses(self, maxload)
 
         return
 
 
-    def levelPlan(self, *courselists):
+    def levelQuarters(self, *courselists):
+        maxLength = len(max(courselists, key=lambda p: len(p)))
+        for courselist in courselists:
+            while( len(courselist) < maxLength ):
+                courselist.append([])
+
+
+    def levelCourses(self, *courselists):
         #pdb.set_trace()
         most_courses = len(max(courselists, key=lambda p: len(p)))
         for courselist in courselists:
-            while( len(courselist) != most_courses ):
+            while( len(courselist) < most_courses ):
                 courselist.append('')
 
 
@@ -116,11 +113,18 @@ class CourseList:
         rplanPT = PrettyTable()
         i = 0
 
+        self.levelQuarters( self.Fall._quarterlist,
+                            self.Winter._quarterlist,
+                            self.Spring._quarterlist,
+                            self.Summer._quarterlist
+                          )
+
         for i in range(len(self.Fall._quarterlist)):
-            self.levelPlan(self.Fall._quarterlist[i],
-                           self.Winter._quarterlist[i],
-                           self.Spring._quarterlist[i],
-                           self.Summer._quarterlist[i])
+            self.levelCourses(  self.Fall._quarterlist[i],
+                                self.Winter._quarterlist[i],
+                                self.Spring._quarterlist[i],
+                                self.Summer._quarterlist[i]
+                             )
             rplanPT.add_column(self.Fall._quarter, self.Fall._quarterlist[i])
             rplanPT.add_column(self.Winter._quarter, self.Winter._quarterlist[i])
             rplanPT.add_column(self.Spring._quarter, self.Spring._quarterlist[i])
