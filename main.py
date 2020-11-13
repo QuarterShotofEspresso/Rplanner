@@ -10,7 +10,9 @@ import sys
 
 
 # use case:
-helpmessage = """
+#helpmessage =
+
+"""
 
  Rplanner is a course planning utility catered for Rside students.
  This could likely be used for other schools, it depends on course structure and
@@ -62,6 +64,11 @@ helpmessage = """
 
 
 """
+
+helpmessage = ''
+with open('README.md', 'r') as fp:
+    helpmessage = fp.read()
+
 
 def main():
 
