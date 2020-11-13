@@ -33,11 +33,11 @@ class GenerateCourseList:
 
     def removeCourseDescription(self, rmtoken):
         for course in self._courselist:
-            if( course.id == rmtoken ):
+            if( course['id'] == rmtoken ):
                 self._courselist.remove(course)
                 print('Sucessfully removed {0}'.format(course))
                 return
-        print('Course not find {0}'.format(course))
+        print('CID not found {0}'.format(rmtoken))
         return
 
 
@@ -60,12 +60,12 @@ class GenerateCourseList:
                 return {}, False
             elif( rmPat.match(cid) ): # remove cid
                 rmtoken = rmPat.search(cid)
-                self.removeCourseDescription(rmtoken)
+                self.removeCourseDescription(rmtoken.group(1))
                 continue
             elif( seedPat.match(cid) ):
                 seedtoken = seedPat.search(cid)
                 print('Implement Me!!')
-                #self.seedCourseDescription(seedtoken) #TODO: if issue becomes common
+                #self.seedCourseDescription(seedtoken.group(1)) #TODO: if issue becomes common
                 continue
             elif( helpPat.match(cid) ):
                 print(helpmessage_gen)
