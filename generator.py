@@ -9,9 +9,9 @@ helpmessage_gen = """
  Type 'quit' on gen> to stop writing new courses.
 
  Commands:
-     rm <CID>           to remove course by ID
-     help               to print this message
-     quit               to quit courselist generator
+     rm <CID>           remove course by CID
+     help               print this message
+     quit               quit courselist generator
      list               list all courses by ID and index
      listsdet           list all courses by all detail and index
      move <SIND> <EIND> move course from <S[tart]IND[ex]> to <E[nd]IND[ex]>
@@ -68,10 +68,11 @@ class GenerateCourseList:
                 continue
             elif( lsPat.match(cid) ):
                 for i in range(len(self._courselist)):
-                    if(self._courselist[i]['pre'] == 'SEED'):
-                        formattedOut = '[{0}:] {1}\tSEED'.format(i, self._courselist[i]['id']))
+                    if(self._courselist[i]['pre'] == ['']):
+                        formattedOut = '[{0}:] {1}\t(SEED)'.format(i, self._courselist[i]['id'])
                     else:
-                        formattedOut = '[{0}:] {1}'.format(i, self._courselist[i]['id']))
+                        formattedOut = '[{0}:] {1}'.format(i, self._courselist[i]['id'])
+                    print(formattedOut)
                 continue
             elif( lsdPat.match(cid) ):
                 for i in range(len(self._courselist)):
@@ -120,7 +121,7 @@ class GenerateCourseList:
             prestr = input('Prereqs [seed]:     ')
             pre    = prestr.upper().split(' ')
             if( len(prestr) == 0 ):
-                pre = 'SEED'
+                #pre = 'SEED'
                 seedcourse = True
                 print('Logged as seed course.')
 
