@@ -13,7 +13,7 @@ helpmessage_gen = """
      help               to print this message
      quit               to quit courselist generator
      list               list all courses by ID and index
-     listdet            list all courses by all detail and index
+     listsdet           list all courses by all detail and index
      move <SIND> <EIND> move course from <S[tart]IND[ex]> to <E[nd]IND[ex]>
      <*>                anything else is interpreted as a course name
 
@@ -50,7 +50,7 @@ class GenerateCourseList:
         quitPat = re.compile(r'^QUIT')
         lsPat   = re.compile(r'^LIST')
         lsdPat  = re.compile(r'^LISTDET')
-        move    = re.compile(r'^MOVE (.+?) (.+)')
+        movePat = re.compile(r'^MOVE (.+?) (.+)')
         seedcourse = False
 
         while(True):
@@ -63,20 +63,18 @@ class GenerateCourseList:
                 rmtoken = rmPat.search(cid)
                 self.removeCourseDescription(rmtoken.group(1))
                 continue
-            elif( seedPat.match(cid) ):
-                seedtoken = seedPat.search(cid)
-                print('Implement Me!!')
-                #self.seedCourseDescription(seedtoken.group(1)) #TODO: if issue becomes common
-                continue
             elif( helpPat.match(cid) ):
                 print(helpmessage_gen)
                 continue
             elif( lsPat.match(cid) ):
-                for i in range(self._courselist):
-                    print('[{0}:] {1}'.format(i, self._courselist[i]['id']))
+                for i in range(len(self._courselist)):
+                    if(self._courselist[i]['pre'] == 'SEED'):
+                        formattedOut = '[{0}:] {1}\tSEED'.format(i, self._courselist[i]['id']))
+                    else:
+                        formattedOut = '[{0}:] {1}'.format(i, self._courselist[i]['id']))
                 continue
             elif( lsdPat.match(cid) ):
-                for i in range(self._courselist):
+                for i in range(len(self._courselist)):
                     print('[{0}:] {1}'.format(i, self._courselist[i]))
                 continue
             elif( movePat.match(cid) ):
@@ -122,6 +120,7 @@ class GenerateCourseList:
             prestr = input('Prereqs [seed]:     ')
             pre    = prestr.upper().split(' ')
             if( len(prestr) == 0 ):
+                pre = 'SEED'
                 seedcourse = True
                 print('Logged as seed course.')
 
