@@ -3,24 +3,25 @@ import re
 
 helpmessage_gen = """
 
- Enter course offerings as F/W/s/S corressponding to Fall/Winter/Spring/Summer
+ Enter course offerings as F/W/S/s corressponding to Fall/Winter/Spring/Summer
  Enter prereqs by course ID and seperate by ONE SPACE, NOT COMMAS.
  Empty entries restart course's entry.
  Type 'quit' on gen> to stop writing new courses.
 
  Commands:
      rm <CID>           to remove course by ID
-     seed <CID>         to move a previously entered course to the front
      help               to print this message
      quit               to quit courselist generator
-     list               list all classes by ID
+     list               list all courses by ID and index
+     listdet            list all courses by all detail and index
+     move <SIND> <EIND> move course from <S[tart]IND[ex]> to <E[nd]IND[ex]>
      <*>                anything else is interpreted as a course name
 
  Example:
      rm CS111           will search for an existing CID by \'CS111\' and remove it
-     seed PHIL009       moves the course \'PHIL009\' to the front of the list
      CS010              starts the creation of a new course entry with CID: \'CS010\'
      ramitbabe          starts the creation of a new course entry with CID: \'ramitbabe\'
+     move 12 9          moves the course at index 12 to index 9
 
 """
 
@@ -45,11 +46,11 @@ class GenerateCourseList:
     def makeCourse(self):
         
         rmPat   = re.compile(r'^RM (.+)')
-        seedPat = re.compile(r'^SEED (.+)')
         helpPat = re.compile(r'^HELP')
-        #nonePat = re.compile(r'^NONE')
         quitPat = re.compile(r'^QUIT')
         lsPat   = re.compile(r'^LIST')
+        lsdPat  = re.compile(r'^LISTDET')
+        move    = re.compile(r'^MOVE (.+?) (.+)')
         seedcourse = False
 
         while(True):
@@ -71,8 +72,19 @@ class GenerateCourseList:
                 print(helpmessage_gen)
                 continue
             elif( lsPat.match(cid) ):
-                for course in self._courselist:
-                    print(course)
+                for i in range(self._courselist):
+                    print('[{0}:] {1}'.format(i, self._courselist[i]['id']))
+                continue
+            elif( lsdPat.match(cid) ):
+                for i in range(self._courselist):
+                    print('[{0}:] {1}'.format(i, self._courselist[i]))
+                continue
+            elif( movePat.match(cid) ):
+                indextoken = movePat.search(cid)
+                sind = int(indextoken.group(1))
+                eind = int(indextoken.group(2))
+                # locate course in current location
+                self._courselist.insert(eind, self._courselist.pop(sind))
                 continue
             elif( len(cid) == 0 ):
                 continue
@@ -88,7 +100,7 @@ class GenerateCourseList:
 
 
             # Availability
-            avail  = input('Offered [FWsS]:     ')
+            avail  = input('Offered [FWSs]:     ')
             availarr = []
             allQuarters = False
             if( len(avail) == 0 ):
@@ -97,14 +109,14 @@ class GenerateCourseList:
                 availarr.append('FALL')
             if('W' in avail or allQuarters):
                 availarr.append('WINTER')
-            if('s' in avail or allQuarters):
-                availarr.append('SPRING')
             if('S' in avail or allQuarters):
+                availarr.append('SPRING')
+            if('s' in avail or allQuarters):
                 availarr.append('SUMMER')
             if( len(availarr) == 0 ):
                 print('Symbol(s) not understood. Restarting THIS course entry')
                 continue
-            
+
 
             # Prereqs
             prestr = input('Prereqs [seed]:     ')
