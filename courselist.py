@@ -51,10 +51,11 @@ class CourseList:
 
 
 
-    def sortByPre(self):
+    def sortByPre(self, clumpRelated):
         self._courselist.append(self._courselistScrambled.pop(0))
         # for each course in the scrambled set
         for course in self._courselistScrambled:
+            #print(course._id)
             #pdb.set_trace() #dbg
             newIndex = len(self._courselist)
             # skim through each course backwards in the sorted set
@@ -63,7 +64,7 @@ class CourseList:
                 if( course.amIPre(self._courselist[i]) ):
                     newIndex = i
                 # else if the selected course has a preq, parse through each till the end
-                elif( course.wasThatPre( self._courselist[i] ) ):
+                elif( course.wasThatPre( self._courselist[i] ) and clumpRelated ):
                     newIndex = i + 1
                     break
             self._courselist.insert(newIndex, course)

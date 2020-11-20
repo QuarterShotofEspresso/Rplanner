@@ -72,7 +72,6 @@ with open('README.md', 'r') as fp:
 
 def main():
 
-
     if (len(sys.argv) < 2):
         print('Incorrect usage. Type \'./<exec> -h\' for help.')
         return
@@ -93,7 +92,9 @@ def main():
         coursegen.generate()
         return
     
-
+    # look for -dc flag to avoid clumping related courses
+    clumpRelated = (not '-dc' in sys.argv)
+    #print(clumpRelated)
 
     # enter the input file
     coursefilepath = sys.argv[1]
@@ -107,7 +108,7 @@ def main():
     # Think about the algo a little more.
     # This method may be redundant
     #pdb.set_trace() #dbg
-    mycl.sortByPre()
+    mycl.sortByPre(clumpRelated)
     
     # sort all courses into respective quarters
     # make sure each class is not going to lose prereq sort

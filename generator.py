@@ -13,7 +13,7 @@ helpmessage_gen = """
      help               print this message
      quit               quit courselist generator
      list               list all courses by ID and index
-     listsdet           list all courses by all detail and index
+     listdet            list all courses by all detail and index
      move <SIND> <EIND> move course from <S[tart]IND[ex]> to <E[nd]IND[ex]>
      <*>                anything else is interpreted as a course name
 
@@ -48,7 +48,7 @@ class GenerateCourseList:
         rmPat   = re.compile(r'^RM (.+)')
         helpPat = re.compile(r'^HELP')
         quitPat = re.compile(r'^QUIT')
-        lsPat   = re.compile(r'^LIST')
+        lsPat   = re.compile(r'^LIST$')
         lsdPat  = re.compile(r'^LISTDET')
         movePat = re.compile(r'^MOVE (.+?) (.+)')
         seedcourse = False
