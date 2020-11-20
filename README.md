@@ -1,6 +1,6 @@
 # Lazy RPlanner
 > Author: Ratnodeep Bandyopadhyay ([@QuarterShotofEspresso](https://github.com/QuarterShotofEspresso))
-
+```
  Lazy Rplanner is course planning utility. This is targeted for my school
  (UCR) but this could likely be used for other schools, it depends 
  on course description and hierarchy. Read below for more information.
@@ -23,29 +23,24 @@
 
 
 ## Use Cases:  
-```
     ./main.py <file> [-ns] [-s <file>] [-l <load>]  
     ./main.py -h  
     ./main.py -g <file>
-```
 
 
 ## Flags:  
-```
     -g  <file>  Launch course list generator and load conents of existing course list.  
     -gO <file>  Launch course list generator and overwrite existing course list.
     -h          Prints this message. Every other flag is ignored.  
     -ns         No summer courses. (Default keeps summer courses)  
     -s  <file>  Print path to file. (Default prints to console)  
     -l  <load>  Maximum course load per quarter. (Defaults to 4)
-```
+    -dc         Short for "don't clump." Prevents courses from being sorted behind 
+                their prerequisite.
 
 ## Example  
-```
     ./main.py courses.json -ns -l 3 -s myschedule
     ./main.py courses.json -ns
-
-```
 
 
 ## Notes
@@ -75,5 +70,4 @@
                 load of 2.
                 **Remember: Course load is subjective.
                             These are just examples.
-
-
+```
