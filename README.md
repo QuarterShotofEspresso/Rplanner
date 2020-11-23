@@ -70,4 +70,9 @@
                 load of 2.
                 **Remember: Course load is subjective.
                             These are just examples.
+
+
+**Note: There's an example directory with a sample course list. It only holds
+        example courses for two years. The command used to generate the
+        plan for this list was './main.py example/draft1.json -ns -dc'.
 ```
